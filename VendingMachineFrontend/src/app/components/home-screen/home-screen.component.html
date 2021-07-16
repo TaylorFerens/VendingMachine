@@ -1,0 +1,58 @@
+<div class="main-container">
+
+  <span>Vending Machine</span>
+  <div class="row-container">
+    <div *ngFor="let coin of coins">
+      <div class="coin-container">
+        <mat-form-field class="coin-form">
+          <mat-label>{{coin.name}}</mat-label>
+          <input matInput
+                 type="number"
+                 [(ngModel)]="coin.quantity"
+                 step="1"
+                 min="0"
+                 pattern="[0-9]+"
+                 (change)="updateTotalPaid()" />
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div>
+      <span>Total Paid:{{totalPaid}} </span>
+    </div>
+  </div>
+
+  <div>
+    <span>Product Information</span>
+    <div>
+      <div *ngFor="let drink of drinks" class="drink-description-container">
+        <span>{{drink.name}}</span>
+        <br>
+        <span>{{drink.quantity}} Drinks available, Price: {{drink.value}}</span>
+        <mat-form-field class="order-form">
+          <input matInput
+                 type="number"
+                 [(ngModel)]="drink.order"
+                 step="1"
+                 min="0"
+                 pattern="[0-9]+"
+                 [disabled]="drink.quantity <= 0"
+                 (change)="updateTotal()" />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <span>Order Total:{{total}} </span>
+  </div>
+
+  <button mat-raised-button
+          color="primary"
+          [disabled]="orderDisabled"
+          class="submit-button"
+          (click)="getDrinks()">
+    Get Drinks
+  </button>
+</div>
